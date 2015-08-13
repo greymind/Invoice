@@ -32,12 +32,12 @@ Vagrant.configure(2) do |config|
 
       d.force_host_vm = true
       d.remains_running = false
-    
-      #d.cmd = ["/bin/sh", "-c", "while true; do echo hello world; sleep 1; done"]
-      #d.cmd = ["http-server"]
       
       d.create_args = ["-t", "-i"]
+      
+      d.ports = ["80:80"]
       d.ports = ["8080:8080"]
+      
       d.link("db:db")
       
       d.link("store:store")
@@ -46,7 +46,7 @@ Vagrant.configure(2) do |config|
       d.vagrant_vagrantfile = "./docker/Vagrantfile"
     end
     
-    v.vm.synced_folder "./", "/src"
+    #v.vm.synced_folder "./", "/src"
   end
 
 end
