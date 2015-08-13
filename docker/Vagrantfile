@@ -9,7 +9,7 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", inline:
     "ps aux | grep 'sshd:' | awk '{print $2}' | xargs kill"
   
-  config.vm.network "forwarded_port", guest: 80, host: 3738
-  config.vm.network "forwarded_port", guest: 8080, host: 3739
+  config.vm.network "forwarded_port", guest: 80, host: 3740
+  config.vm.network "forwarded_port", guest: 8080, host: 3741
 
 end
