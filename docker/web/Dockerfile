@@ -24,7 +24,7 @@ RUN ln -s "$(which nodejs)" /usr/bin/node
 RUN node -v
 
 # Set initial working directory
-WORKDIR /src
+WORKDIR /vagrant
 
 # Launch bash
 CMD ["/bin/bash"]
