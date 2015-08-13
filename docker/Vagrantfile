@@ -3,13 +3,19 @@
 
 Vagrant.configure(2) do |config|
   
-  config.vm.box = "hashicorp/precise64"
-  config.vm.provision "docker"
-  config.vm.provision "shell", path: "bootstrap.sh"
-  config.vm.provision "shell", inline:
-    "ps aux | grep 'sshd:' | awk '{print $2}' | xargs kill"
-  
-  config.vm.network "forwarded_port", guest: 80, host: 3740
-  config.vm.network "forwarded_port", guest: 8080, host: 3741
+  config.vm.define "greymind-dockerhost" do |v|
+    v.vm.box = "hashicorp/precise64"
+    v.vm.provision "docker"
+    v.vm.provision "shell", path: "bootstrap.sh"
+    #v.vm.provision "shell", inline:
+    #  "ps aux | grep 'sshd:' | awk '{print $2}' | xargs kill"
+    
+    v.vm.network "forwarded_port", guest: 80, host: 3738
+    v.vm.network "forwarded_port", guest: 8080, host: 3739
+    
+    v.vm.provider :virtualbox do |vb|
+        vb.name = "greymind-dockerhost"
+    end
+  end
 
 end

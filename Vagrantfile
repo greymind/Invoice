@@ -1,6 +1,10 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+ENV['VAGRANT_DEFAULT_PROVIDER'] = 'docker'
+DOCKER_HOST_NAME = "greymind-dockerhost"
+DOCKER_HOST_VAGRANTFILE = "./docker/Vagrantfile"
+
 Vagrant.configure(2) do |config|
 
   config.vm.define "store" do |v|
@@ -9,7 +13,8 @@ Vagrant.configure(2) do |config|
       
       d.image = "redis"
       
-      d.vagrant_vagrantfile = "./docker/Vagrantfile"
+      d.vagrant_machine = "#{DOCKER_HOST_NAME}"
+      d.vagrant_vagrantfile = "#{DOCKER_HOST_VAGRANTFILE}"
     end
   end
   
@@ -19,7 +24,8 @@ Vagrant.configure(2) do |config|
       
       d.image = "mongo"
       
-      d.vagrant_vagrantfile = "./docker/Vagrantfile"
+      d.vagrant_machine = "#{DOCKER_HOST_NAME}"
+      d.vagrant_vagrantfile = "#{DOCKER_HOST_VAGRANTFILE}"
     end
   end
   
@@ -32,7 +38,7 @@ Vagrant.configure(2) do |config|
 
       d.force_host_vm = true
       d.remains_running = false
-      
+    
       d.create_args = ["-t", "-i"]
       
       d.ports = ["80:80"]
@@ -43,10 +49,10 @@ Vagrant.configure(2) do |config|
       d.link("store:store")
       d.env = { 'REDIS_HOST' => 'store' }
       
-      d.vagrant_vagrantfile = "./docker/Vagrantfile"
+      d.vagrant_machine = "#{DOCKER_HOST_NAME}"
+      d.vagrant_vagrantfile = "#{DOCKER_HOST_VAGRANTFILE}"
     end
     
-    #v.vm.synced_folder "./", "/src"
   end
 
 end
